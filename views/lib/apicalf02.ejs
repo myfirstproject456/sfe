@@ -1,0 +1,44 @@
+<%- include apicalf01 %>	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="assets/plugins/jquery/jquery-1.9.1.min.js"></script>
+	<script src="assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
+	<script src="assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="assets/plugins/jquery-cookie/jquery.cookie.js"></script>
+	<script src="assets/plugins/autocomplete/autocomplete.js"></script>
+	<!-- ================== END BASE JS ================== -->
+
+
+	<script>
+
+$(window).load(function(e) {
+                          
+
+			$.ajax({
+				type: "GET",
+				url: "/notificationsc",
+				timeout: 4000,
+				contentType: 'application/json',
+				success: function(response) {
+					var fdata = JSON.parse(JSON.stringify(response));
+					if(fdata.noticount[0].count && fdata.noticount[0].count > 0 ){
+				document.getElementById('noticount').innerHTML=fdata.noticount[0].count;
+	 $("#notiul").append("<li class=\"dropdown-header bg-green text-black\">Notifications</li>");
+				for (var i = 0; i < fdata.notilist.length; i++) {
+					var noti= fdata.notilist[i];
+	$("#notiul").append("<li class=\"media\"><a href=\"/notifications\"><div class=\"media-body\"><h6 class=\"media-heading\">"+noti.title+"</h6><p>"+noti.msg+"</p></div></a></li>");
+}
+	$("#notiul").append("<li class=\"dropdown-footer text-center\"><a href=\"/notifications\">View more</a></li>");			
+//$("notiurl").attr("data-toggle","dropdown");
+}
+else
+{
+document.getElementById('noticount').innerHTML="0";
+}
+
+
+}
+			});
+			 });
+	</script>

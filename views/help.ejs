@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<%- include lib/apicalh01 %>
+<% var pagename="Help" %>
+<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+<link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+<link href="assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" />
+<link href="assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+<link href="assets/plugins/bootstrap-eonasdan-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link href="assets/plugins/bootstrap-wizard/css/bwizard.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/Buttons/css/buttons.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/Scroller/css/scroller.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<!-- ================== END PAGE LEVEL STYLE ================== -->
+<style type="text/css">
+input,
+textarea,
+select,
+.multipleSelect,
+.selectpicker,
+.datepicker {
+    margin: 0 0 10px 0;
+}
+
+.element {
+    position: relative;
+    top: 50%;
+    transform: translateY(-10%);
+}
+</style>
+
+<script type="text/javascript">
+    var Screenfields = [];
+    var currentcount = 0;
+    var selectedIds = [];
+    var groupcount = 1;
+</script>
+
+<body>
+    <!-- begin #page-loader -->
+    <div id="page-loader" class="fade in"><span class="spinner"></span></div>
+    <!-- end #page-loader -->
+
+    <!-- begin #page-container -->
+    <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+        <!-- begin #header -->
+        <%- include lib/apicalh02 %>
+        <!-- end #header -->
+
+        <!-- begin #sidebar -->
+        <div id="sidebar" class="sidebar">
+            <!-- begin sidebar scrollbar -->
+            <div data-scrollbar="true" data-height="100%">
+                <!-- begin sidebar user -->
+                <ul class="nav">
+                    <li class="nav-profile">
+                        <div class="image">
+                            <a href="#"><img src="assets/img/user.png" alt="" /></a>
+                        </div>
+                        <div class="info">
+                            <%=user.enname  %>
+                        </div>
+                    </li>
+                </ul>
+                <!-- end sidebar user -->
+                <%- include lib/apicalm01 %>
+            </div>
+            <!-- end sidebar scrollbar -->
+        </div>
+        <!-- end #sidebar -->
+
+        <!-- begin #content -->
+        <div id="content" class="content">
+            <!-- begin breadcrumb -->
+
+            <!-- end breadcrumb -->
+            <!-- begin row -->
+            <div class="row">
+                <!-- begin col-12 -->
+                <div class="col-md-12">
+                    <!-- begin panel -->
+                    <div class="panel panel-inverse">
+                        <div class="panel-heading">
+                            <div class="panel-heading-btn">
+
+                            </div>
+                            <h4 class="panel-title"><%= pagename %></h4>
+                        </div>
+                        <div class="panel-body">
+                            <form action="/" method="POST" name="form-wizard" id="form1" data-parsley-validate="true">
+                                <div id="wizard">
+                                    <ol>
+                                        <li>
+                                            <span style="padding-right:3px; padding-top: 3px; display:inline-block;">
+                                                <img src="assets/img/hindustan.png" alt="">
+                                                <!-- Hindustan Electric Motors -->
+                                            </span>
+                                        </li>
+                                        <li>
+                                           <span style="padding-right:3px; padding-top: 3px; display:inline-block;">
+                                                <img src="assets/img/abb.png" alt="">
+                                                <!-- ABB -->
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span style="padding-right:3px; padding-top: 3px; display:inline-block;">
+                                                <img src="assets/img/bonfiglioli.png"  alt="">
+                                               <!-- Bonfiglioli -->
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span style="padding-right:3px; padding-top: 3px; display:inline-block;">
+                                                <img src="assets/img/siemens.png"  alt="">
+                                                <!-- Siemens -->
+                                            </span>
+                                        </li>
+                                    </ol>
+
+                                    <!-- begin wizard step-1 -->
+                                    <div>
+                                        <!-- begin row -->
+                                        <div class="row" style="align-content: center;">
+                                            <img src="assets/img/nameplate_hmm.png" alt="">
+                                        </div>
+                                        <!-- end row -->
+                                    </div>
+                                    <!-- end wizard step-1 -->
+                                    <!-- begin wizard step-2 -->
+                                    <div>
+                                        <!-- begin row -->
+                                        <div class="row">
+                                            <img src="assets/img/nameplate_siemens.jpg" alt="">
+                                        </div>
+                                        <!-- end col-6 -->
+                                        <!-- end row -->
+                                    </div>
+                                    <!-- end wizard step-2 -->
+
+                                    <div>
+                                        <div class="row">
+                                            <img src="assets/img/nameplate_hmm.png" alt="">
+                                        </div>
+                                    </div>
+
+                                    <div>                                     
+                                        <div class="row">
+                                            <img src="assets/img/nameplate_siemens.jpg" alt="">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- end panel -->
+                </div>
+                <!-- end col-12 -->
+            </div>
+            <!-- end row -->
+        </div>
+                    <!-- <p class="text-center">
+                            &copy; Apical Innovations All Right Reserved 2017
+                        </p> -->
+                        <!-- end #content -->
+                        <!-- begin scroll to top btn -->
+                        <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+                        <!-- end scroll to top btn -->
+                    </div>
+                    <!-- end page container -->
+                    <!-- ================== BEGIN BASE JS ================== -->
+                    <%- include lib/apicalf02.ejs %>
+                    <!-- ================== END BASE JS ================== -->
+
+                    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+                    <script src="assets/plugins/bootstrap-wizard/js/bwizard.js"></script>
+                    <script src="assets/js/form-wizards.demo.min.js"></script>
+                    <script src="assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
+                    <script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+                    <script src="assets/plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
+                    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
+                    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js"></script>
+                    <script src="assets/plugins/DataTables/extensions/Buttons/js/jszip.min.js"></script>
+                    <script src="assets/plugins/DataTables/extensions/Scroller/js/dataTables.scroller.min.js"></script>
+                    <script src="assets/plugins/DataTables/extensions/Buttons/js/pdfmake.min.js"></script>
+                    <script src="assets/plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js"></script>
+                    <script src="assets/plugins/parsley/dist/parsley.js"></script>
+                    <script src="assets/js/form-wizards-validation.demo.min.js"></script>
+                    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js"></script>
+                    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.print.min.js"></script>
+                    <script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+                    <script src="assets/js/apical/table-manage-scroller.demo.js"></script>
+                    <script src="assets/js/apps.min.js"></script>
+                    <!-- ================== END PAGE LEVEL JS ================== -->
+
+                    <script>
+                        $(document).ready(function() {
+                            App.init();
+                            FormWizardValidation.init(); 
+                        });
+                    </script>
+                    
+                </body>
+
+                </html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include lib/apicalh01 %>
+    <% var pagename="Service Request" %>
+        <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+        <link href="assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+        <link href="assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
+        <link href="assets/plugins/parsley/src/parsley.css" rel="stylesheet" />
+        <link href="assets/plugins/bootstrap-wizard/css/bwizard.min.css" rel="stylesheet" />
+        <!-- ================== END PAGE LEVEL STYLE ================== -->
+
+        <style type="text/css">
+            input,
+            textarea,
+            select,
+            .multipleSelect,
+            .selectpicker,
+            .datepicker {
+                margin: 0 0 10px 0;
+            }
+            
+            .element {
+                position: relative;
+                top: 50%;
+                transform: translateY(-10%);
+            }
+        </style>
+        <script type="text/javascript">
+            var Screenfields = [];
+        </script>
+
+        <body>
+            <!-- begin #page-loader -->
+            <div id="page-loader" class="fade in"><span class="spinner"></span></div>
+            <!-- end #page-loader -->
+
+            <!-- begin #page-container -->
+            <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+                <%- include lib/apicalh02_srvreq %>
+
+                    <!-- begin #content -->
+                    <div id="content" class="content-fluid" style="padding: 20px; margin-bottom: 10px">
+
+                        <!-- begin row -->
+                        <div class="row">
+                            <!-- begin col-12 -->
+                            <div class="col-md-12">
+                                <!-- begin panel -->
+                                <div class="panel panel-inverse">
+                                    <div class="panel-heading">
+                                        <div class="panel-heading-btn element">
+                                            <a href="javascript:onValidate();" class="btn btn-xl btn-icon btn-circle btn-success" data-toggle="modal"><i class="fa fa-save" ></i></a>
+                                            <a href="assets/img/dummy-pdf_2.pdf" target="_blank" class="btn btn-xl btn-icon btn-circle btn-success" id="help"><i class="fa fa-question-circle" ></i></a>
+                                        </div>
+                                        <h4 class="panel-title">Service</h4>
+                                    </div>
+                                    <div class="panel-body" style="padding: 20px;">
+                                        <div>
+                                            <fieldset>
+                                                <!--  <legend class="pull-left width-full"></legend> -->
+                                                <!-- begin row -->
+                                                <div class="row">
+                                                    <!-- begin col-6 -->
+
+                                                    <div class="col-md-6">
+                                                        <form id="form1" action="/" method="POST" class="margin-bottom-0" data-parsley-validate>
+                                                            <label class="control-label">Company Name <span class="text-danger">*</span></label>
+                                                            <div class="row m-b-12">
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" placeholder="Company Name" name="custname" required />
+                                                                </div>
+                                                            </div>
+                                                            <label class="control-label">Company Address <span class="text-danger">*</span></label>
+                                                            <div class="row m-b-12">
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" placeholder="Company address" name="custaddress" required />
+                                                                </div>
+                                                            </div>
+                                                            <label class="control-label">Name <span class="text-danger">*</span></label>
+                                                            <div class="row m-b-12">
+                                                                <div class="col-md-8 ">
+                                                                    <input type="text" class="form-control" placeholder="name" name="cp_name" required />
+                                                                </div>
+                                                            </div>
+                                                            <label class="control-label">Mobile Number <span class="text-danger">*</span></label>
+                                                            <div class="row m-b-12">
+                                                                <div class="col-md-8">
+                                                                    <input type="text" maxlength="13" class="form-control" placeholder="Number" name="cp_number" required minlength="8" data-parsley-type="digits" />
+                                                                </div>
+                                                            </div>
+                                                            <label class="control-label">Email <span class="text-danger">*</span></label>
+                                                            <div class="row m-b-12">
+                                                                <div class="col-md-8">
+                                                                    <input type="email" class="form-control" placeholder="Email address" name="cp_email" required />
+                                                                </div>
+                                                            </div>
+                                                            <label class="control-label">Password <span class="text-danger">*</span></label>
+                                                            <div class="row m-b-15">
+                                                                <div class="col-md-8">
+                                                                    <input type="password" class="form-control" placeholder="Password" name="pwd" required />
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <form id="form2" enctype="multipart/form-data" action="/save_request" method="post" data-parsley-validate="true">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Select products</label>
+                                                                <div class="row">
+                                                                    <select class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-white" name="product" api="v1/getproducts">
+                                                                        <option value="NA" selected>NA</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <label class="control-label">Issue Description :</label>
+                                                                <div class="row">
+                                                                    <input type="text" name="description" placeholder="Description" class="form-control" value="" />
+                                                                </div>
+                                                                <label class="control-label">Product Serial No :</label>
+                                                                <div class="row">
+                                                                    <input type="text" name="serialno" placeholder="Serial No" class="form-control" value="" />
+                                                                </div>
+
+                                                                <label class="control-label">Product Model No :</label>
+                                                                <div class="row">
+                                                                    <input type="text" name="modelno" placeholder="Model No" class="form-control" value="" />
+                                                                </div>
+
+                                                                <label class="control-label">Images :</label>
+                                                                <div class="row">
+                                                                    <input type="file" name="imgUploader" id="image" accept="image/*" multiple/>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                    <!-- end col-6 -->
+
+                                                </div>
+                                                <!-- end row -->
+                                            </fieldset>
+                                        </div>
+                                        <!-- end wizard step-1 -->
+                                        <!-- begin wizard step-2 -->
+
+                                        <!-- end wizard step-2 -->
+
+                                    </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- end panel -->
+                        </div>
+                        <!-- end col-12 -->
+                    </div>
+                    <!-- end row -->
+                    <div class="modal fade" id="modal-dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <!-- <h4 class="modal-title">Service Request</h4> -->
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <h4 align="center">Thank you for Service request !!!</h4>
+                                            <h5 align="center" id="ticket"></h5>
+                                            <h6 align="center">Concern Person will Call you soon !!!</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="/" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+                                    <a href="/" class="btn btn-sm btn-success">OK</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <!-- end #content -->
+            <!-- begin scroll to top btn -->
+            <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+            <!-- end scroll to top btn -->
+            </div>
+            <!-- end page container -->
+
+            <!-- ================== BEGIN BASE JS ================== -->
+            <%- include lib/apicalf02.ejs %>
+                <!-- ================== END BASE JS ================== -->
+
+                <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+                <!-- <script src="assets/plugins/bootstrap-wizard/js/bwizard.js"></script> -->
+                <!-- <script src="assets/js/form-wizards.demo.min.js"></script> -->
+                <script src="assets/plugins/parsley/dist/parsley.js"></script>
+                <script src="assets/js/apps.min.js"></script>
+                <!-- ================== END PAGE LEVEL JS ================== -->
+
+                <script>
+                    $(document).ready(function() {
+                        App.init();
+                        $('select').each(
+                            function(index) {
+                                var input = $(this);
+                                var api = input.attr('api');
+                                /*alert('Api: ' + input.attr('api'));*/
+                                $.ajax({
+                                    type: "GET",
+                                    url: "" + api,
+                                    timeout: 6000,
+                                    contentType: 'application/json',
+                                    success: function(data) {
+                                        helpers.buildDropdown(
+                                            JSON.parse(JSON.stringify(data)),
+                                            input,
+                                            'Select an option'
+                                        );
+                                    }
+                                });
+                            });
+                    });
+
+                    function onSubmit() {
+                        if ($("#image")[0].files.length > 5) {
+                            alert("You can select only 5 files");
+                        } else {
+                            sendmulti();
+                            //  $( "#form2" ).submit();
+                        }
+
+                    }
+
+                    function sendmulti() {
+                        var form = new FormData($("#form2")[0]);
+                        $.ajax({
+                            url: "/save_request",
+                            method: "POST",
+                            data: form,
+                            processData: false,
+                            contentType: false,
+                            success: function(result) {
+                                var response = JSON.parse(JSON.stringify(result));
+                                document.getElementById("ticket").innerHTML = "Ticket ID generated : \n" + response.insertId;
+                                $('#modal-dialog').modal('show');
+                                $('#form1').trigger("reset");
+                                $('#form2').trigger("reset");
+                            },
+                            error: function(er) {
+                                alert("Please enter valid details");
+                            }
+                        });
+
+                    }
+                </script>
+                <script>
+                    function onValidate() {
+
+                        var form = $('#form1');
+                        form.parsley().validate();
+                        if (form.parsley().isValid()) {
+                            //                alert('valid');
+                            var formdata = $('#form1').serializeArray();
+                            //structure json
+                            var data = formdata.reduce(function(a, x) {
+                                a[x.name] = x.value;
+                                return a;
+                            }, {});
+                            Screenfields.push(data);
+                            //       alert(JSON.stringify(Screenfields));
+                            $.ajax({
+                                type: "POST",
+                                url: "/registercust",
+                                timeout: 6000,
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    formdata: JSON.stringify(Screenfields)
+                                }),
+                                success: function(data) {
+                                    var fdata = JSON.parse(JSON.stringify(data));
+                                    if (fdata.status == '0') {
+                                        //  $('#modal-dialog').show();
+                                        onSubmit();
+                                        //          Screenfields = [];
+                                        //            $('#form1').trigger("reset");
+                                        //              window.location.href = '/dashboard';
+                                    } else {
+                                        //  $('#form1').trigger("reset");
+                                        alert(data.status_msg);
+                                        Screenfields = [];
+                                    }
+                                }
+                            });
+                        } else {
+                            // alert(' Data not valid');
+                        }
+                    };
+                </script>
+
+                </script>
+
+        </body>
+
+</html>

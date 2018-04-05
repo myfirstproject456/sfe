@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--<![endif]-->
+<%- include lib/apicalh01 %>
+<% var pagename="Notifications" %>
+<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+<link href="assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/Buttons/css/buttons.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/AutoFill/css/autoFill.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/ColReorder/css/colReorder.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/KeyTable/css/keyTable.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/RowReorder/css/rowReorder.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/Select/css/select.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/parsley/src/parsley.css" rel="stylesheet" />
+<!-- ================== END PAGE LEVEL STYLE ================== -->
+
+<!-- ================== BEGIN BASE JS ================== -->
+<!-- ================== END BASE JS ================== -->
+<style type="text/css">
+#btnShow {
+    width: 40px;
+    height: 40px;
+    float: right;
+    margin-bottom: 10px;
+}
+
+input,
+textarea,
+select {
+    margin: 0 0 10px 0;
+}
+</style>
+<script>
+    var custid = "";
+    var tddetailid;
+    var Screenfields = [];
+</script>
+
+<body>
+    <!-- begin #page-loader -->
+    <div id="page-loader" class="fade in"><span class="spinner"></span></div>
+    <!-- end #page-loader -->
+
+    <!-- begin #page-container -->
+    <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+        <%- include lib/apicalh02 %>
+        <!-- begin #sidebar -->
+        <div id="sidebar" class="sidebar">
+            <!-- begin sidebar scrollbar -->
+            <div data-scrollbar="true" data-height="100%">
+                <!-- begin sidebar user -->
+                <ul class="nav">
+                    <li class="nav-profile">
+                        <div class="image">
+                            <a href="javascript:;"><img src="assets/img/user.png" alt="" /></a>
+                        </div>
+                        <div class="info">
+                            <%=user.enname  %>
+                        </div>
+                    </li>
+                </ul>
+                <!-- end sidebar user -->
+                <%- include lib/apicalm01 %>
+            </div>
+            <!-- end sidebar scrollbar -->
+        </div>
+        <!-- end #sidebar -->
+        <!-- begin #content -->
+        <div id="content" class="content">
+
+            <!-- begin row -->
+            <div class="row">
+                <!-- begin col-2 -->
+
+                <!-- end col-2 -->
+                <!-- begin col-10 -->
+                <div class="col-md-12">
+                    <div class="panel panel-inverse">
+                        <div class="panel-heading">
+                            <div class="panel-heading-btn  element">
+                               
+                            </div>
+                            <h4 class="panel-title"><%= pagename %></h4>
+                        </div>
+                        <div class="panel-body">
+                            <table id="data-table" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Notification title</th>
+                                       
+                                        <th>Message</th>
+                                       
+                                        <th>Notification Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <% 
+                                    notilist.forEach (function(noti){               
+                                    %>
+                                    <tr id="<%= noti.notify_id %>">
+                                        <td>
+                                            <%= noti.title %>
+                                        </td>
+                                     
+                                        <td>
+                                            <%= noti.msg %>
+                                        </td>
+                                       
+                                        <td>
+<%=new Date(noti.date_gen).toISOString().slice(0,19).replace('T',' ').toString(); %>
+                                          
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col-10 -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end #content -->
+
+        <!-- begin theme-panel -->
+
+        <!-- end theme-panel -->
+
+        <!-- begin scroll to top btn -->
+        <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+        <!-- end scroll to top btn -->
+    </div>
+    <!-- end page container -->
+
+    <!-- ================== BEGIN BASE JS ================== -->
+    <%- include lib/apicalf02.ejs %>
+    <!-- ================== END BASE JS ================== -->
+
+    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script src="assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
+    <script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/jszip.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/pdfmake.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.print.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/AutoFill/js/dataTables.autoFill.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/ColReorder/js/dataTables.colReorder.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/KeyTable/js/dataTables.keyTable.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/RowReorder/js/dataTables.rowReorder.min.js"></script>
+    <script src="assets/plugins/DataTables/extensions/Select/js/dataTables.select.min.js"></script>
+    <script src="assets/js/table-manage-combine.demo.js"></script>
+    <script src="assets/plugins/parsley/dist/parsley.js"></script>
+    <script src="assets/js/apps.min.js"></script>
+    <!-- ================== END PAGE LEVEL JS ================== -->
+
+    <script>
+            $(document).ready(function() {
+                App.init();
+                            // TableManageCombine.init();
+            });
+
+            var table = $('#data-table').DataTable({
+                dom: 'lBfrtip',
+                buttons: [{
+                    extend: 'excel',
+                    className: 'btn-sm'
+               
+                }, {
+                    extend: 'pdf',
+                    className: 'btn-sm'
+                }, {
+                    extend: 'print',
+                    className: 'btn-sm'
+                                   }],
+                responsive: true
+            });
+            $('#data-table tbody').on('click', 'tr', function() {
+                var data = table.row(this).id();
+                custid = data;
+                alert("notify_click "+custid);
+
+                window.location.href= '/custservicelist';
+                // var form = document.createElement("form");
+                // // var element1 = document.createElement("input");
+
+                // form.method = "GET";
+                // form.action = "/custservicelist";
+
+                // // element1.value = custid;
+                // // element1.name = "custid";
+                // // form.appendChild(element1);
+                // // document.body.appendChild(form);
+                // form.submit();
+            });
+        </script>
+
+        </body>
+
+            </html>

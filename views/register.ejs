@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include lib/apicalh01 %>
+    <% var pagename="Login" %>
+        <!-- ================== BEGIN BASE JS ================== -->
+        <link href="assets/plugins/parsley/src/parsley.css" rel="stylesheet" />
+        <!-- ================== END BASE JS ================== -->
+
+        <script type="text/javascript">
+            var Screenfields = [];
+        </script>
+        <style type="text/css" media="screen">
+            .loginn {
+                margin-right: 80px;
+                margin-left: 80px;
+            }
+            #over {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            p.error {
+                color: red;
+                font-style: bold;
+                font-size: 20px;
+            }
+            .customHeight{
+                 height: 100% !important;
+            }
+        </style>
+
+        <body class="pace-top bg-white">
+            <!-- begin #page-loader -->
+    
+            <!-- end #page-loader -->
+
+            <!-- begin #page-container -->
+            <div id="page-container" class="fade">
+                <!-- begin register -->
+                <div class="register register-with-news-feed">
+                    <!-- begin news-feed -->
+                    <div class="news-feed">
+                        <div class="news-image">
+                            <img src="assets/img/login-bg/bg-1.jpg" alt="" />
+                        </div>
+                        <div class="news-caption">
+                            <div class="row">
+                                <span style="padding-right:3px; padding-top: 3px; display:inline-block;">
+                                    <img src="assets/img/steel_o_fab.png" style="width: 55px; height: 55px" alt="">
+                                    <b style="font-size: 2.2em; padding-left: 20px;padding-right: 10px;">Steel-O-Fab Engineers</b>
+                                </span>
+                            </div>
+                                
+                        </div>
+                    </div>
+                    <!-- end news-feed -->
+                    <!-- begin right-content -->
+                    <div class="right-content">
+                        <!-- begin register-content -->
+                        <div class="register-content">
+                            <div class="row row-space-10">
+                                <div class="col-md-4 m-b-15">
+                                <button type="submit" class="btn btn-primary btn-block" id="loginn" onclick="location.href='#">Login</button>
+                                </div>
+                                <div class="col-md-4 m-b-15">
+                                    <button type="submit" class="btn btn-primary btn-block" id="register" onclick="location.href='#">Create Account</button>
+                                </div>
+                                <div class="col-md-4 m-b-15">
+                                    <button type="submit" class="btn btn-success btn-block btn" id="service" onclick="location.href='#">Service Request</button>
+                                </div>
+                            </div>
+                            <div class="loginn customHeight" id="panellogin">
+                                <div id="over">
+                                    <img src="assets/img/logo.jpg" alt="">
+                                </div>
+                                <form id="formlogin" action="/login" method="POST" class="margin-bottom-0" data-parsley-validate>
+                                    <div class="form-group m-b-20" style="margin-top: 20px;">
+                                        <input type="text" class="form-control input-lg" placeholder="Login ID" name="PRM02" required />
+                                    </div>
+                                    <div class="form-group m-b-20">
+                                        <input type="password" class="form-control input-lg" placeholder="Password" name="PRM03" required />
+                                    </div>
+
+                                    <div class="login-buttons">
+                                        <button type="submit" class="btn btn-success btn-block btn-lg">Sign me in</button>
+                                    </div>
+                                    <br/>
+                                    <!-- <div class="m-t-20">
+                                                        Not a member yet? Click <a href="/register">here</a> to register.
+                                                    </div> -->
+                                    <div>
+                                        <p class="error"><b>
+                                            <% if(message){ %>
+                                                <%=message%>
+                                                    <% } %>
+                                      </b></p>
+                                    </div>
+                                   
+                                </form>
+
+                            </div>
+                            <div class="register customHeight" id="panelregister" hidden="true">
+                                <!-- begin col-6 -->
+                                <form id="formregister" action="/registercust" method="POST" class="margin-bottom-0" data-parsley-validate>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <label class="control-label">Company Name <span class="text-danger">*</span></label>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" placeholder="Company Name" name="custname" required />
+                                                    </div>
+                                                </div>
+                                                <label class="control-label">Name <span class="text-danger">*</span></label>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12 ">
+                                                        <input type="text" class="form-control" placeholder="Name" name="cp_name" required />
+                                                    </div>
+                                                </div>
+                                                <label class="control-label">Email <span class="text-danger">*</span></label>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <input type="email" class="form-control" placeholder="Email Address" name="cp_email" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label">Company Address <span class="text-danger">*</span></label>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" placeholder="Company Address" name="custaddress" required />
+                                                    </div>
+                                                </div>
+                                                <label class="control-label">Mobile Number <span class="text-danger">*</span></label>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <input type="phone" maxlength="13" minlength="8" class="form-control" placeholder="Number" name="cp_number" data-parsley-type="digits" required />
+                                                    </div>
+                                                </div>
+                                                <label class="control-label">Password <span class="text-danger">*</span></label>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <input type="password" class="form-control" placeholder="Password" name="pwd" required />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="register-buttons col-md-12">
+                                        <center>
+                                            <button  type="button" class="btn btn-info btn-block" style="width: 150px"  id="btnn" onclick="onRegister();">Sign Up</button>
+                                        </center>
+                                            
+                                    </div>
+
+                                           
+                                </form>
+                                <!-- end col-6 -->
+
+                            </div>
+
+                            <div class="service" id="panelservice" hidden="true">
+                                <!-- begin col-6 -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <form id="form1" action="/registercust" method="POST" class="margin-bottom-0" data-parsley-validate>
+
+                                                <label class="control-label">Company Name <span class="text-danger">*</span></label>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" placeholder="Company Name" name="custname" required />
+                                                    </div>
+                                                </div>
+                                                <label class="control-label">Company Address <span class="text-danger">*</span></label>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control" placeholder="Company Address" name="custaddress" required />
+                                                    </div>
+                                                </div>
+                                                <label class="control-label">Name <span class="text-danger">*</span></label>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12 ">
+                                                        <input type="text" class="form-control" placeholder="Name" name="cp_name" required />
+                                                    </div>
+                                                </div>
+
+                                                <label class="control-label">Mobile Number <span class="text-danger">*</span></label>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <input type="text" maxlength="13" minlength="8" class="form-control" placeholder="Number" name="cp_number" data-parsley-type="digits" required />
+                                                    </div>
+                                                </div>
+                                                <label class="control-label">Email <span class="text-danger">*</span></label>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <input type="email" class="form-control" placeholder="Email Address" name="cp_email" required />
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" class="form-control" name="pwd" value="" />
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <form id="form2" action="/save_request" method="POST" class="margin-bottom-0" data-parsley-validate="true">
+
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Product Brand</label>
+
+                                                        <select class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-white" name="prod_brid" api="v1/getproductbrand" required>
+                                                            <option value="NA" selected>NA</option>
+                                                        </select>
+                                                        <div id="divproductbrand" hidden="true">
+                                                            <input type="text" name="brandname" placeholder="Product Brand" class="form-control " value="" hidden="true" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Product Category</label>
+
+                                                        <select class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-white" name="product" api="v1/getproductscat" required>
+                                                            <option value="NA" selected>NA</option>
+                                                        </select>
+                                                        <div id="divproductcatip" hidden="true">
+                                                            <input type="text" name="prodcatname" placeholder="Product Category" class="form-control " value="" hidden="true" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Machine Name</label>
+                                                        <input type="text" name="machinename" placeholder="Machine Name" class="form-control" value="" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Issue Description </label>
+                                                        <input type="text" name="description" placeholder="Description" class="form-control" value=""  required/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Product Serial No </label>
+                                                        <input type="text" name="serialno" placeholder="Serial No" class="form-control" value="" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">Product Model No </label>
+                                                        <input type="text" name="modelno" placeholder="Model No" class="form-control" value=""/>
+                                                    </div>
+                                                </div>
+                                                <label class="control-label">Images </label>
+                                                <div class="row m-b-15">
+                                                    <div class="col-md-12">
+                                                        <input type="file" name="imgUploader" id="image" accept="image/*,.pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple/>
+								<p><small>(Maximum 5 images)</small></p>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="register-buttons col-md-12">
+                                            <center>
+                                                <button type="button" class="btn btn-info btn-block " style="width: 150px" id="btnn" onclick="onValidate();">Save</button>
+                                            </center>
+                                        </div>
+                                       
+                                    </div>
+                                     
+                                </div>
+
+                                <!-- end col-6 -->
+
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="modal fade" id="modal-dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <!-- <h4 class="modal-title">Service Request</h4> -->
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <h4 align="center">Thank you for Service request !!!</h4>
+                                                <h5 align="center" id="ticket"></h5>
+                                                <h6 align="center">Concern Person will Call you soon !!!</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="/" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+                                        <a href="/" class="btn btn-sm btn-success">OK</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end register-content -->
+               <%- include lib/apicalf00.ejs %>
+
+                    </div>
+                 
+                    <!-- end right-content -->
+                </div>
+                <!-- end
+                 register -->
+               
+            </div>
+            <!-- end page container -->
+
+            <!-- ================== BEGIN BASE JS ================== -->
+           <!-- ================== BEGIN BASE JS ================== -->
+	<script src="assets/plugins/jquery/jquery-1.9.1.min.js"></script>
+	<script src="assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
+	<script src="assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="assets/plugins/jquery-cookie/jquery.cookie.js"></script>
+	<script src="assets/plugins/autocomplete/autocomplete.js"></script>
+	<!-- ================== END BASE JS ================== -->
+                <!-- ================== END BASE JS ================== -->
+
+                <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+                <script src="assets/js/apps.min.js"></script>
+                <script src="assets/plugins/parsley/dist/parsley.js"></script>
+                <!-- ================== END PAGE LEVEL JS ================== -->
+
+                <script>
+                    $(document).ready(function() {
+                        App.init();
+                        $('select').each(
+                            function(index) {
+                                var input = $(this);
+                                var api = input.attr('api');
+                                /*alert('Api: ' + input.attr('api'));*/
+                                $.ajax({
+                                    type: "GET",
+                                    url: "" + api,
+                                    timeout: 6000,
+                                    contentType: 'application/json',
+                                    success: function(data) {
+                                        helpers.buildDropdown(
+                                            JSON.parse(JSON.stringify(data)),
+                                            input,
+                                            'Select an option'
+                                        );
+                                    }
+                                });
+                            });
+
+//                        $('select').on('change', function() {
+//                            // alert('onchange'+this.value+this.name);
+//                            if (this.name == 'prod_brid') {
+//                                if (this.value == '119') { // value taken from masterdata
+//                                    $("#divproductbrand").show();
+//                                } else {
+//                                    $("#divproductbrand").hide();
+//                                }
+//                            } else if (this.name == 'product') {
+//                                if (this.value == '120') { // value taken from masterdata
+//                                    $("#divproductcatip").show();
+//                                } else {
+//                                    $("#divproductcatip").hide();
+//                                }
+//                            }
+//                        });
+                        
+                                $('select').on('change', function() {
+                            // alert('onchange'+this.value+this.name);
+                            if (this.name == 'prod_brid') {
+                                if (this.value == '119') { // value taken from masterdata
+                                    $("#divproductbrand").show();
+				$("#divproductbrand input").prop('required',true);	
+                                } else {
+                                    $("#divproductbrand").hide();
+				$("#divproductbrand input").prop('required',false);	
+
+                                }
+                            } else if (this.name == 'product') {
+                                if (this.value == '120') { // value taken from masterdata
+                                    $("#divproductcatip").show();
+                               	$("#divproductcatip input").prop('required',true);	
+				 } else {
+                                    $("#divproductcatip").hide();
+				$("#divproductcatip input").prop('required',false);	
+
+                                }
+                            }
+                        });
+//                    });
+
+                    });
+                </script>
+
+                <script>
+                    function onSubmit() {
+                        if ($("#image")[0].files.length > 5) {
+                            alert("You can select only 5 files");
+                        } else {
+                            var form = $('#form2');
+                            form.parsley().validate();
+                            if (form.parsley().isValid()) {
+                                sendmulti();
+                            //  $( "#form2" ).submit();
+                            }
+                        }
+
+                    }
+
+                    function sendmulti() {
+                        var form = new FormData($("#form2")[0]);
+                        $.ajax({
+                            url: "/save_request",
+                            method: "POST",
+                            data: form,
+                            processData: false,
+                            contentType: false,
+                            success: function(result) {
+                                var response = JSON.parse(JSON.stringify(result));
+                                document.getElementById("ticket").innerHTML = "Ticket ID generated : \n" + response.insertId;
+                                $('#modal-dialog').modal('show');
+                                $('#form1').trigger("reset");
+                                $('#form2').trigger("reset");
+                            },
+                            error: function(er) {
+                                alert("Please enter valid details");
+                            }
+                        });
+
+                    }
+                </script>
+                <script>
+                    function onRegister() {
+
+                        var form = $('#formregister');
+                        form.parsley().validate();
+                        if (form.parsley().isValid()) {
+                            //                alert('valid');
+                            var formdata = $('#formregister').serializeArray();
+                            //structure json
+                            var data = formdata.reduce(function(a, x) {
+                                a[x.name] = x.value;
+                                return a;
+                            }, {});
+                            Screenfields.push(data);
+                            //       alert(JSON.stringify(Screenfields));
+                            $.ajax({
+                                type: "POST",
+                                url: "/registercust",
+                                timeout: 6000,
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    formdata: JSON.stringify(Screenfields)
+                                }),
+                                success: function(data) {
+                                    var fdata = JSON.parse(JSON.stringify(data));
+                                    if (fdata.status == '0') {
+                                        //  $('#modal-dialog').show();
+                                        Screenfields = [];
+                                        $('#formregister').trigger("reset");
+                                        window.location.href = '/';
+                                    }else if (fdata.status == '2') {
+                                        alert(data.status_msg);
+                                        Screenfields = [];
+                                        window.location.href = '/';
+                                    } else {
+                                        //  $('#form1').trigger("reset");
+                                        alert(data.status_msg);
+                                        Screenfields = [];
+                                    }
+                                }
+                            });
+                        } else {
+//                            alert(' Data not valid');
+                        }
+
+                    }
+
+                    function onValidate() {
+
+                        var form = $('#form1');
+                        form.parsley().validate();
+                        if (form.parsley().isValid()) {
+                            //                alert('valid');
+                            var formdata = $('#form1').serializeArray();
+                            //structure json
+                            var data = formdata.reduce(function(a, x) {
+                                a[x.name] = x.value;
+                                return a;
+                            }, {});
+                            Screenfields.push(data);
+                            //       alert(JSON.stringify(Screenfields));
+                            $.ajax({
+                                type: "POST",
+                                url: "/registercust",
+                                timeout: 6000,
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    formdata: JSON.stringify(Screenfields)
+                                }),
+                                success: function(data) {
+                                    var fdata = JSON.parse(JSON.stringify(data));
+                                    if (fdata.status == '0' ) {
+                                        //  $('#modal-dialog').show();
+                                        onSubmit();
+                                        //          Screenfields = [];
+                                        //            $('#form1').trigger("reset");
+                                        //              window.location.href = '/dashboard';
+                                    }else if(fdata.status == '2'){
+                                        alert(data.status_msg);
+                                        onSubmit();
+                                    } else {
+                                        //  $('#form1').trigger("reset");
+                                        alert(data.status_msg);
+                                        Screenfields = [];
+                                    }
+                                }
+                            });
+                        } else {
+                            // alert(' Data not valid');
+                        }
+                    };
+                </script>
+
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        $("#register").click(function() {
+                            $("#panellogin,#panelservice").hide();
+                            $("#panelregister").show();
+                        });
+                        $("#service").click(function() {
+                            $("#panellogin,#panelregister").hide();
+                            $("#panelservice").show();
+                        });
+                        $("#loginn").click(function() {
+                            $("#panelservice,#panelregister").hide();
+                            $("#panellogin").show();
+                        });
+                    });
+                </script>
+
+        </body>
+
+</html>
+

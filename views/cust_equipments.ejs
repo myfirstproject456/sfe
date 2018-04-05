@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--<![endif]-->
+<%- include lib/apicalh01 %>
+    <% var pagename="Customer's Equipment" %>
+        <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+        <link href="assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+        <link href="assets/plugins/DataTables/extensions/Buttons/css/buttons.bootstrap.min.css" rel="stylesheet" />
+        <link href="assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet" />
+        <link href="assets/plugins/DataTables/extensions/AutoFill/css/autoFill.bootstrap.min.css" rel="stylesheet" />
+        <link href="assets/plugins/DataTables/extensions/ColReorder/css/colReorder.bootstrap.min.css" rel="stylesheet" />
+        <link href="assets/plugins/DataTables/extensions/KeyTable/css/keyTable.bootstrap.min.css" rel="stylesheet" />
+        <link href="assets/plugins/DataTables/extensions/RowReorder/css/rowReorder.bootstrap.min.css" rel="stylesheet" />
+        <link href="assets/plugins/DataTables/extensions/Select/css/select.bootstrap.min.css" rel="stylesheet" />
+        <!-- ================== END PAGE LEVEL STYLE ================== -->
+
+        <!-- ================== BEGIN BASE JS ================== -->
+        <link href="assets/plugins/parsley/src/parsley.css" rel="stylesheet" />
+
+        <!-- ================== END BASE JS ================== -->
+        <style type="text/css">
+            #btnShow {
+                width: 40px;
+                height: 40px;
+                float: right;
+                margin-bottom: 10px;
+            }
+            
+            input,
+            textarea,
+            select {
+                margin: 0 0 10px 0;
+            }
+            
+            .action {
+                margin: 5px 5px 5px 0;
+            }
+            
+            .element {
+                position: relative;
+                top: 50%;
+                transform: translateY(-10%);
+            }
+            /* #images{
+                width: 100px !important; 
+            }*/
+        </style>
+        <script>
+            var equiid = "";
+            var reqtype = '0';
+        </script>
+
+        <body>
+            <!-- begin #page-loader -->
+            <div id="page-loader" class="fade in"><span class="spinner"></span></div>
+            <!-- end #page-loader -->
+
+            <!-- begin #page-container -->
+            <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+                <%- include lib/apicalh02 %>
+                    <!-- begin #sidebar -->
+                    <div id="sidebar" class="sidebar">
+                        <!-- begin sidebar scrollbar -->
+                        <div data-scrollbar="true" data-height="100%">
+                            <!-- begin sidebar user -->
+                            <ul class="nav">
+                                <li class="nav-profile">
+                                    <div class="image">
+                                        <a href="javascript:;"><img src="assets/img/user.png" alt="" /></a>
+                                    </div>
+                                    <div class="info">
+                                        <%=user.enname  %>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- end sidebar user -->
+                            <%- include lib/apicalm01 %>
+                        </div>
+                        <!-- end sidebar scrollbar -->
+                    </div>
+                    <!-- end #sidebar -->
+                    <!-- begin #content -->
+                    <div id="content" class="content">
+                        <!-- begin row -->
+                        <!-- <a href="#modal-dialog" class="btn btn-success btn-icon btn-circle" data-toggle="modal" id="btnShow"><i class="fa fa-plus fa-1x" style="margin-top: 12px;" ></i></a> -->
+                        <div class="row">
+                            <!-- begin col-10 -->
+                            <div class="col-md-12">
+                                <div class="panel panel-inverse">
+                                    <div class="panel-heading">
+                                        <div class="panel-heading-btn  element">
+                                            Add Equipement: <a href="javascript:createdialog();" class="btn btn-xl btn-icon btn-circle btn-success"><i class="fa fa-plus" ></i></a>
+                                        </div>
+                                        <h4 class="panel-title"><%= pagename %></h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table id="data-table" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Brand</th>
+                                                    <th>Category</th>
+                                                    <th>Machine Name</th>
+                                                    <th>Dept</th>
+                                                    <th>Model No</th>
+                                                    <th>Serial No</th>
+                                                    <th>Description</th>
+                                                    <th>Qty</th>
+                                                    <th style="width: 100px">Images</th>
+                                                    <th>Batch Date</th>
+                                                    <th style="width: 80px">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <% 
+                                            srvlist.forEach (function(srvreq){                  
+                                        %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= srvreq.brandname %>
+                                                        </td>
+                                                        <td>
+                                                            <%= srvreq.prodcatname %>
+                                                        </td>
+                                                        <td>
+                                                            <%= srvreq.machinename %>
+                                                        </td>
+                                                        <td>
+                                                            <%= srvreq.department %>
+                                                        </td>
+                                                        <td>
+                                                            <%= srvreq.modelno %>
+                                                        </td>
+                                                        <td>
+                                                            <%= srvreq.serialno %>
+                                                        </td>
+                                                        <td>
+                                                            <%= srvreq.description %>
+                                                        </td>
+                                                        <td>
+                                                            <%= srvreq.qty %>
+                                                        </td>
+                                                        <td id="<%= srvreq.ticketid %>" class="tdimgclick">
+                                                            <%
+                                        if ((srvreq.imgurl1 !== "") && (srvreq.imgurl1 !== null ))
+                                        {%>
+                                                                <img class="img" src="<%= url+srvreq.imgurl1 %>" height="30" width="30" />
+                                                                <% }
+                                           if ((srvreq.imgurl2 !== "") && (srvreq.imgurl2 !== null ))
+                                           {%>
+                                                                    <img class="img" src="<%= url+srvreq.imgurl2 %>" height="30" width="30" />
+                                                                    <%}
+                                               if ((srvreq.imgurl3 !== "") && (srvreq.imgurl3 !== null ))
+                                               {%>
+                                                                        <img class="img" src="<%= url+srvreq.imgurl3 %>" height="30" width="30" />
+                                                                        <%}
+                                                   if ((srvreq.imgurl4 !== "") && (srvreq.imgurl4 !== null ))
+                                                   {%>
+                                                                            <img class="img" src="<%=  url+srvreq.imgurl4 %>" height="30" width="30" />
+                                                                            <%}
+                                                       if ((srvreq.imgurl5 !== "") && (srvreq.imgurl5 !== null ))
+                                                       {%>
+                                                                                <img class="img" src="<%=  url+srvreq.imgurl5 %>" height="30" width="30" />
+                                                                                <%}
+                                                        %>
+                                                        </td>
+                                                        <td>
+                                                            <%= srvreq.batchdate %>
+                                                        </td>
+                                                        <td> <i id="<%= srvreq.equiid %>" class="fa fa-ticket  fa-2x tdserv_req action"></i>
+                                                            <i id="<%= srvreq.equiid %>" class="fa fa-shopping-cart fa-2x tdpurchase action"></i>
+                                                            <i id="<%= srvreq.equiid %>" class="fa fa-pencil fa-2x tdclick action"></i>
+                                                        </td>
+                                                    </tr>
+
+                                                    <% }); %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col-10 -->
+                        </div>
+                        <!-- end row -->
+
+                        <div class="modal fade" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <center>
+                                                <img id="img01" src="" height="342" width="342" />
+                                            </center>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="modal-dialog">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title">Equipment Details</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+
+                                            <form id="frmUploader" enctype="multipart/form-data" action="/add_equipment" method="post" data-parsley-validate="true">
+                                                <div class="form-group col-md-12">
+                                                    <div class="col-md-6">
+                                                        <input type="hidden" name="custid" placeholder="custid" class="form-control" value="<%= custid %>" />
+                                                        <input type="hidden" name="equiid" placeholder="Equipment id" class="form-control" value="" />
+                                                        <label class="control-label col-md-4">Product Brand</label>
+                                                        <div class="col-md-8">
+                                                            <select class="form-control selectpicker col-md-8" data-size="10" data-live-search="true" data-style="btn-white" name="prod_bridequip" api="v1/getproductbrand" required="">
+                                                                <option value="NA" selected>NA</option>
+                                                            </select>
+                                                            <div id="divproductbrandequip" hidden="true">
+                                                                <input type="text" name="brandname" placeholder="Product Brand" class="form-control " value="" hidden="true" />
+                                                            </div>
+                                                        </div>
+
+                                                        <label class="control-label col-md-4">Product Category</label>
+                                                        <div class="col-md-8">
+                                                            <select class="form-control selectpicker col-md-8" data-size="10" data-live-search="true" data-style="btn-white" name="productequip" api="v1/getproductscat" required>
+                                                                <option value="NA" selected>NA</option>
+                                                            </select>
+                                                            <div id="divproductcatipequip" hidden="true">
+                                                                <input type="text" name="prodcatname" placeholder="Product Category" class="form-control " value="" hidden="true" />
+                                                            </div>
+                                                        </div>
+
+                                                        <label class="col-md-4">Machine Name </label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" name="machinename" placeholder="Machine Name" class="form-control" value="" />
+                                                        </div>
+
+                                                        <label class="col-md-4">Department </label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" name="department" placeholder="Department" class="form-control" value="" />
+                                                        </div>
+
+                                                        <label class="col-md-4">Model No </label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" name="modelno" placeholder="Model No" class="form-control" value="" />
+                                                        </div>
+
+                                                        <label class="col-md-4">Serial No </label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" name="serialno" placeholder="Serial No" class="form-control" value="" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+
+                                                        <label class="col-md-4">Description </label>
+                                                        <div class="col-md-8">
+                                                            <textarea class="form-control" placeholder="Description" rows="5" name="description"></textarea>
+                                                        </div>
+
+                                                        <label class="col-md-4">Quantity </label>
+                                                        <div class="col-md-8">
+                                                            <input type="number" name="qty" parsley-data-type="digits" placeholder="Quantity" maxlength="4" min="1" class="form-control" value="1" />
+                                                        </div>
+
+                                                        <label class="col-md-4">Batch Date </label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" name="batchdate" placeholder="Batch Date" class="form-control datepicker" value="" />
+                                                        </div>
+
+                                                        <label class="col-md-4">Images </label>
+                                                        <div class="col-md-8">
+                                                            <input type="file" name="imgUploader" id="image" accept="image/*" multiple/>
+                                                            <p><small>(Maximum 5 images)</small></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+                                        <a href="javascript:onSubmit();" class="btn btn-sm btn-success">Done</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="modal-dialog1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title">Service Request</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+
+                                            <form id="frmUploader1" enctype="multipart/form-data" action="/save_request" method="post" data-parsley-validate="true">
+                                                <div class="form-group">
+                                                    <input type="hidden" name="custid" placeholder="custid" class="form-control col-md-12" value="<%= custid %>" />
+                                                        
+                                                    <label class="control-label col-md-3">Product Brand</label>
+                                                    <div class="col-md-9">
+                                                        <select class="form-control selectpicker col-md-8" data-size="10" data-live-search="true" data-style="btn-white" name="prod_brid" api="v1/getproductbrand" required="" disabled>
+                                                            <option value="NA" selected>NA</option>
+                                                        </select>
+                                                        <div id="divproductbrand" hidden="true">
+                                                            <input type="text" name="brandname" placeholder="Product Brand" class="form-control " value="" readonly />
+                                                        </div>
+                                                    </div>
+
+                                                    <label class="control-label col-md-3">Product Category</label>
+                                                    <div class="col-md-9">
+                                                        <select class="form-control selectpicker col-md-8" data-size="10" data-live-search="true" data-style="btn-white" name="product" api="v1/getproductscat" required="" disabled>
+                                                            <option value="NA" selected>NA</option>
+                                                        </select>
+                                                        <div id="divproductcatip" hidden="true">
+                                                            <input type="text" name="prodcatname" placeholder="Product Category" class="form-control " value="" readonly />
+                                                        </div>
+                                                    </div>
+
+                                                    <label class="col-md-3">Machine Name </label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" name="machinename" placeholder="Machine Name" class="form-control" value="" />
+                                                    </div>
+
+                                                    <label class="col-md-3">Product Model No </label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" name="modelno" placeholder="Model No" class="form-control" value="" />
+                                                    </div>
+
+                                                    <label class="col-md-3">Product Serial No </label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" name="serialno" placeholder="Serial No" class="form-control" value="" />
+                                                    </div>
+
+                                                    <label class="col-md-3">Issue Description </label>
+                                                    <div class="col-md-9">
+                                                        <textarea class="form-control" placeholder="Description" rows="2" name="description"></textarea>
+                                                    </div>
+
+                                                    <label class="col-md-3">Batch Date </label>
+                                                    <div class="col-md-9">
+                                                        <input type="text" name="batchdate" placeholder="Batch Date" class="form-control datepicker" value="" />
+                                                    </div>
+
+                                                    <label class="col-md-3">Images </label>
+                                                    <div class="col-md-9">
+                                                        <input type="file" name="imgUploader" id="image" accept="image/*,.pdf,.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple />
+                                                        <p><small>(Maximum 5 images)</small></p>
+                                                    </div>
+                                                     <input type="hidden" name="reqtype" placeholder="reqtype" class="form-control col-md-12"  />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+                                        <a id="btnsrvreq" href="javascript:onServReq();" class="btn btn-sm btn-success">Done</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+                    </div>
+            </div>
+            <!-- end #content -->
+
+            <!-- begin theme-panel -->
+
+            <!-- end theme-panel -->
+
+            <!-- begin scroll to top btn -->
+            <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+            <!-- end scroll to top btn -->
+            <!-- end page container -->
+
+            <!-- ================== BEGIN BASE JS ================== -->
+            <%- include lib/apicalf02.ejs %>
+                <!-- ================== END BASE JS ================== -->
+
+                <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+                <script src="assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
+                <script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/Buttons/js/jszip.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/Buttons/js/pdfmake.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/Buttons/js/buttons.print.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/AutoFill/js/dataTables.autoFill.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/ColReorder/js/dataTables.colReorder.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/KeyTable/js/dataTables.keyTable.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/RowReorder/js/dataTables.rowReorder.min.js"></script>
+                <script src="assets/plugins/DataTables/extensions/Select/js/dataTables.select.min.js"></script>
+                <script src="assets/js/table-manage-combine.demo.js"></script>
+                <script src="assets/js/apps.min.js"></script>
+                <script src="assets/plugins/parsley/dist/parsley.js"></script>
+                <!-- ================== END PAGE LEVEL JS ================== -->
+
+                <script>
+                    $(document).ready(function() {
+                        App.init();
+                        // TableManageCombine.init();
+                        $(".datepicker").datepicker({});
+
+                        var datacount = "<%- datacount %>";
+                        // alert("datacount"+datacount);
+
+                        $('#data-table').dataTable({
+                            dom: 'lBfrtip',
+                            buttons: [{
+                                    extend: 'excel',
+                                    className: 'btn-sm',
+                                    exportOptions: {
+                                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 9]
+                                    }
+                                }, {
+                                    extend: 'pdf',
+                                    className: 'btn-sm',
+                                    orientation: 'landscape',
+                                    exportOptions: {
+                                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 9]
+                                    }
+                                }, {
+                                    extend: 'print',
+                                    className: 'btn-sm',
+                                    orientation: 'landscape',
+                                    exportOptions: {
+                                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 9]
+                                    }
+                                }
+
+                            ],
+                            // responsive: true,
+                            scrollX: true
+                        });
+
+                        $('#data-table').on('click', 'img', function() {
+                            //     $('img.img').click(function() {
+                            //  alert(this.src);
+                            var modalImg = document.getElementById("img01");
+                            modalImg.src = this.src;
+                            $('#myModal').modal('show');
+                        });
+
+                        $('select').each(function(index) {
+                            var input = $(this);
+                            var api = input.attr('api');
+                            if (input.attr('name') !== "data-table_length") {
+                                $.ajax({
+                                    type: "GET",
+                                    url: api,
+                                    timeout: 6000,
+                                    contentType: 'application/json',
+                                    success: function(data) {
+                                        helpers.buildDropdown(
+                                            JSON.parse(JSON.stringify(data)),
+                                            input,
+                                            'Select an option'
+                                        );
+                                    },
+                                    error: function(xhr, status, error) {
+                                        //alert(status+" "+error.Message+" "+xhr.responseText); 
+                                    }
+                                });
+                            }
+                        });
+
+                        $('select').on('change', function() {
+                            // alert('onchange'+this.value+this.name);
+                            if (this.name == 'prod_bridequip') {
+                                if (this.value == '119') { // value taken from masterdata
+                                    $("#divproductbrandequip").show();
+                                    $("#divproductbrandequip input").prop('required', true);
+                                } else {
+                                    $("#divproductbrandequip").hide();
+                                    $("#divproductbrandequip input").prop('required', false);
+                                }
+                            } else if (this.name == 'productequip') {
+                                if (this.value == '120') { // value taken from masterdata
+                                    $("#divproductcatipequip").show();
+                                    $("#divproductcatipequip input").prop('required', true);
+                                } else {
+                                    $("#divproductcatipequip").hide();
+                                    $("#divproductcatipequip input").prop('required', false);
+                                }
+                            }
+                        });
+                    });
+
+                    $('#modal-dialog').on('hidden.bs.modal', function() {
+                        $(this).find("input,textarea,select").val('').end();
+                        $('#frmUploader').parsley().destroy();
+                        $('#frmUploader').validate().resetForm();
+                    })
+
+                    $('#modal-dialog1').on('hidden.bs.modal', function() {
+                        $(this).find("input,textarea,select").val('').end();
+                        $('#frmUploader').parsley().destroy();
+                        $('#frmUploader').validate().resetForm();
+                    })
+                    function createdialog() {
+                        equiid = "";
+                        $('#modal-dialog').modal('show');
+                    }
+
+                    $(".tdclick").click(function() {
+                        var productId = $(this).attr('id');
+                        equiid = productId;
+                        $("#modal-dialog").modal('show');
+                        //  alert(productId);
+                    });
+
+                    $(".tdpurchase").click(function() {
+                        var productId = $(this).attr('id');
+                        equiid = productId;
+                        reqtype = '1';
+//                        $("#modal-dialog1").title = "Purchase";
+                        $("#btnsrvreq").text('Buy');
+                         $("#modal-dialog1").find('.modal-title').text("Purchase");
+                        $("#modal-dialog1").modal('show');
+                        
+                        //  alert(productId);
+                    });
+
+                    $(".tdserv_req").click(function() {
+                        var productId = $(this).attr('id');
+                        equiid = productId;
+                        reqtype = '0';
+//                        var btn = document.getElementById("btnsrvreq");
+                       $("#btnsrvreq").text('Done');
+//                      $("#modal-dialog1").title = "Service Request111";
+                        $("#modal-dialog1").find('.modal-title').text("Service Request");
+                        $("#modal-dialog1").modal('show');
+                        //  alert(productId);
+                    });
+
+                     $('#modal-dialog1').on('show.bs.modal', function(e) {
+//                        $(e.currentTarget).find("textarea[name='description']").val('');
+                        if (equiid !== '') {
+                            $.ajax({
+                                type: "POST",
+                                url: "/getequipmentdetails",
+                                timeout: 6000,
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    id: equiid
+                                }),
+                                success: function(response) {
+                                    var parsed = JSON.parse(JSON.stringify(response))[0];
+//                                     alert(JSON.stringify(response)+" "+reqtype);
+                                    $(e.currentTarget).find("input[name='custid']").val(parsed["custid"]);
+                                    $(e.currentTarget).find("input[name='brandname']").val(parsed["brandname"]);
+                                    $(e.currentTarget).find("input[name='prodcatname']").val(parsed["prodcatname"]);
+                                    $(e.currentTarget).find("input[name='machinename']").val(parsed["machinename"]);
+                                    $(e.currentTarget).find("input[name='modelno']").val(parsed["modelno"]);
+                                    $(e.currentTarget).find("input[name='serialno']").val(parsed["serialno"]);
+                                    $(e.currentTarget).find("input[name='batchdate']").val(parsed["batchdate"]);
+                                    $(e.currentTarget).find("input[name='reqtype']").val(reqtype);
+                                    $("select[name='prod_brid'] option[value='" + parsed["prod_brid"] + "']").attr('selected', 'selected');
+                                    $("select[name='product'] option[value='" + parsed["prod_catid"] + "']").attr('selected', 'selected');
+
+                                    if (parsed['prod_brid'] == '119') { // value taken from masterdata
+                                        $("#divproductbrand").show();
+                                    } else {
+                                        $("#divproductbrand").hide();
+                                    }
+
+                                    if (parsed['prod_catid'] == '120') { // value taken from masterdata
+                                        $("#divproductcatip").show();
+                                    } else {
+                                        $("#divproductcatip").hide();
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    // alert(status+" "+error.Message+" "+xhr.responseText);
+                                }
+                            });
+                        }
+                    });
+
+                    
+                    $('#modal-dialog').on('show.bs.modal', function(e) {
+                        if (equiid !== '') {
+                            $.ajax({
+                                type: "POST",
+                                url: "/getequipmentdetails",
+                                timeout: 6000,
+                                contentType: 'application/json',
+                                data: JSON.stringify({
+                                    id: equiid
+                                }),
+                                success: function(response) {
+                                    var parsed = JSON.parse(JSON.stringify(response))[0];
+                                    // alert(JSON.stringify(response)+" "+parsed["custid"]);
+                                    $(e.currentTarget).find("input[name='custid']").val(parsed["custid"]);
+                                    $(e.currentTarget).find("input[name='equiid']").val(parsed["equiid"]);
+                                    $(e.currentTarget).find("input[name='brandname']").val(parsed["brandname"]);
+                                    $(e.currentTarget).find("input[name='prodcatname']").val(parsed["prodcatname"]);
+                                    $(e.currentTarget).find("input[name='machinename']").val(parsed["machinename"]);
+                                    $(e.currentTarget).find("input[name='department']").val(parsed["department"]);
+                                    $(e.currentTarget).find("input[name='modelno']").val(parsed["modelno"]);
+                                    $(e.currentTarget).find("textarea[name='description']").val(parsed["description"]);
+                                    $(e.currentTarget).find("input[name='serialno']").val(parsed["serialno"]);
+                                    $(e.currentTarget).find("input[name='batchdate']").val(parsed["batchdate"]);
+                                    $(e.currentTarget).find("input[name='qty']").val(parsed["qty"]);
+                                    $("select[name='prod_bridequip'] option[value='" + parsed["prod_brid"] + "']").attr('selected', 'selected');
+                                    $("select[name='productequip'] option[value='" + parsed["prod_catid"] + "']").attr('selected', 'selected');
+
+                                    if (parsed['prod_brid'] == '119') { // value taken from masterdata
+                                        $("#divproductbrandequip").show();
+                                    } else {
+                                        $("#divproductbrandequip").hide();
+                                    }
+
+                                    if (parsed['prod_catid'] == '120') { // value taken from masterdata
+                                        $("#divproductcatipequip").show();
+                                    } else {
+                                        $("#divproductcatipequip").hide();
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    // alert(status+" "+error.Message+" "+xhr.responseText);
+                                }
+                            });
+                        } else {
+                            $(e.currentTarget).find("input[name='qty']").val("1");
+                            $("#divproductbrandequip").hide();
+                            $("#divproductcatipequip").hide();
+                        }
+                    });
+
+                    function onSubmit() {
+                        if ($("#image")[0].files.length > 5) {
+                            alert("You can select only 5 files");
+                        } else {
+                            var form = $('#frmUploader');
+                            form.parsley().validate();
+                            if (form.parsley().isValid()) {
+                                sendmulti();
+                            }
+                        }
+                    }
+                </script>
+
+                <script type="text/javascript">
+                    $('#modal-dialog').on('hidden.bs.modal', function() {
+                        $('#frmUploader').trigger("reset");
+                    })
+
+                    function sendmulti() {
+//                        $("select[name='prod_bridequip']").prop('disabled', false);
+//                        $("select[name='prod_bridequip']").removeAttr('disabled');
+//                        $("select[name='productequip']").prop('disabled', false);
+//                        $("select[name='productequip']").removeAttr('disabled');
+                            
+                        var form = new FormData($("#frmUploader")[0]);
+//                        $("select[name='prod_bridequip']").attr('disabled', 'disabled');
+//                        $("select[name='productequip']").attr('disabled', 'disabled');
+                        $.ajax({
+                            url: "/add_equipment",
+                            method: "POST",
+                            data: form,
+                            processData: false,
+                            contentType: false,
+                            success: function(result) {
+                                var response = JSON.parse(JSON.stringify(result));
+                                // alert(response.insertId);
+                                $('#modal-dialog').modal('hide');
+                                alert("Data saved successfully.");
+                                window.location.reload();
+                            },
+                            error: function(xhr, status, error) {
+                                // alert(xhr.responseText);
+                                alert("Please enter valid details");
+                            }
+                        });
+                    }
+                </script>
+            <script>
+                function onServReq() {
+//                    alert("request : "+ JSON.stringify($("#image")[0].files));
+                        if ($("#image")[0].files.length > 5) {
+                            alert("You can add only 5 files");
+                        } else {
+                            var form = $('#frmUploader1');
+                            form.parsley().validate();
+                            
+                            if (form.parsley().isValid()) {
+                                sendReq();
+                                //  $( "#form2" ).submit();
+                            }
+                        }
+                    }
+
+                       function sendReq(){
+                            $("select[name='prod_brid']").prop('disabled', false);
+                            $("select[name='prod_brid']").removeAttr('disabled');
+                            
+                            $("select[name='product']").prop('disabled', false);
+                            $("select[name='product']").removeAttr('disabled');
+                            var form = new FormData($("#frmUploader1")[0]);
+//                            alert("formdata : "+ JSON.stringify(form));
+                            $("select[name='prod_brid']").attr('disabled', 'disabled');
+                            $("select[name='product']").attr('disabled', 'disabled');
+                            $.ajax({
+                                    url: "/save_cust_equip_request",
+                                    method: "POST",
+                                    data: form,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(result){
+                                        var response = JSON.parse(JSON.stringify(result));
+                                        // alert(response.insertId);
+                                        $('#modal-dialog1').modal('hide');
+                                        alert("Ticket ID generated\n"+response.insertId);
+                                        window.location.reload();
+                                    },
+                                    error: function(er){
+                                        alert("Please enter valid details");
+                                    }
+                            });
+                        }
+            </script>
+
+        </body>
+
+</html>
